@@ -1,0 +1,8 @@
+.TaskCard {
+  border: 1px solid #eee;
+  font-family: sans-serif;
+  padding: 6px;
+}
+.DeleteButton {
+  float: right;
+}
