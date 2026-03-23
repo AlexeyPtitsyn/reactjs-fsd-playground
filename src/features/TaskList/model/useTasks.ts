@@ -1,5 +1,5 @@
 import type { Task } from 'entities/task';
-import { useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 export type Filter = 'all' | 'completed' | 'incomplete';
 
@@ -7,16 +7,20 @@ export function useTasks(initial: Task[]) {
   const [tasks, setTasks] = useState<Task[]>(initial);
   const [filter, setFilter] = useState<Filter>('all');
 
-  const filteredTasks = tasks.filter(item => {
-    if (filter === 'completed') return item.completed;
-    if (filter === 'incomplete') return !item.completed; 
-    return true;
-  });
+  const filteredTasks = useMemo(() => {
+    return tasks.filter(item => {
+      if (filter === 'completed') return item.completed;
+      if (filter === 'incomplete') return !item.completed;
+      return true;
+    });
+  }, [tasks, filter]);
+
+  const removeTask = useCallback((id: string) => setTasks(tasks.filter(item => item.id !== id)), [tasks]);
 
   return {
     tasks: filteredTasks,
     filter,
     setFilter,
-    removeTask: (id: string) => setTasks(tasks.filter(item => item.id !== id)),
+    removeTask,
   };
 }
