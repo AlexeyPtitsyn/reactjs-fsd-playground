@@ -1,11 +1,11 @@
-import TaskPage from 'pages/Tasks'
 import './App.css'
+import FormPage from 'pages/Form'
 
 function App() {
 
   return (
     <>
-      <TaskPage />
+      <FormPage />
     </>
   )
 }
